@@ -21,7 +21,7 @@ class CreateScreenState extends State<CreateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(,
+    return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
            SliverAppBar(
@@ -33,7 +33,16 @@ class CreateScreenState extends State<CreateScreen> {
                   child:
                   FloatingActionButton.small(
                     onPressed: () {
-                      createGame();
+                      if (players.isNotEmpty) {
+                        createGame();
+                      }
+                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("No hay jugadores"),
+                          ),
+                        );
+                      }
                     },
                     elevation: 1,
                     child: const Icon(Icons.play_arrow),
