@@ -1,5 +1,6 @@
 import 'package:apunto_yo/game_screen.dart';
 import 'package:apunto_yo/place_holder.dart';
+import 'package:apunto_yo/rules_screen.dart';
 import 'package:apunto_yo/sql_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,16 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
           title: Stack(
               children: [
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_createRoute(const RulesScreen(), -1, 0))
+                            .then((value) => refreshGames());
+                      },
+                      icon: const Icon(Icons.menu_book_outlined),
+                      color: Theme.of(context).disabledColor,
+                    )),
                 Align(
                   alignment: Alignment.center,
                   child: Wrap(
