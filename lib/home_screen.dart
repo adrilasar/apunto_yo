@@ -202,9 +202,17 @@ class HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 20,
                   children: [
-                    const Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Icon(Icons.circle_outlined, size: 55)
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 0, 5),
+                        child: Container(
+                          width: 65,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadiusDirectional.circular(40),
+                              color: Theme.of(context).scaffoldBackgroundColor
+                          ),
+                          child: Text(games[gIndex].playerList!.length.toString(), style: TextStyle(fontSize: 35, fontFamily: 'RobotoCondensed', color: Theme.of(context).buttonTheme.colorScheme?.primary)),
+                        )
                     ),
                     SizedBox(
                         width: 250,
