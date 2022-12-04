@@ -18,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late List<Game> games;
   bool _isLoading = false;
+  bool s1 = false;
+  bool s2 = false;
 
   @override
   void initState() {
@@ -53,7 +55,7 @@ class HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Image.asset('assets/launcher_icon/foreground.png', height: 50, width: 50,),
-                      Text('Apunto yo!', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontFamily: 'RobotoCondensed')),
+                      getTitle(),
                     ],
                   ),
                 ),
@@ -300,4 +302,51 @@ class HomeScreenState extends State<HomeScreen> {
     }
     return winner;
   }
+
+  Widget getTitle(){
+    return GestureDetector(
+      onLongPress: () => checkSteps(0),
+      onDoubleTap: () => checkSteps(1),
+      child: Text(
+        "Apunto yo!",
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontFamily: 'RobotoCondensed'),
+      ),
+    );
+  }
+
+  Widget getDonateDialog() {
+    return AlertDialog(
+      title: const Text(
+        'Donate',
+      ),
+      content: const Text('Please consider donating to support our cause.'),
+      actions: <Widget>[
+        TextButton(
+          child: const Text(
+            'Atrás',
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    );
+  }
+
+  /// Sets the value of the given [step] to true.
+  /// If all steps are true, the dialog is shown.
+  checkSteps(int step) {
+    if(step == 0){
+      setState(() => s1 = true);
+    }
+    else if(step == 1){
+      setState(() => s2 = true);
+    }
+    if(s1 && s2){
+      setState(() => s1 = s2 = false);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => getDonateDialog(),
+      );
+    }
+  }
+
 }
