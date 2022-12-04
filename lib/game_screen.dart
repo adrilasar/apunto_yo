@@ -89,14 +89,16 @@ class GameScreenState extends State<GameScreen> {
       key: ObjectKey(game.playerList),
       //If the user swipes the card to the right, the round is decremented. If the user swipes the card to the left, the round is incremented.
       confirmDismiss: (direction) {
-        if (direction == DismissDirection.endToStart && game.currentRound <= 6) {
+        if (direction == DismissDirection.endToStart &&
+            game.currentRound <= 6) {
           setState(() {
             if (game.currentRound == 6) {
               controller.play();
             }
             setCurrentRound(game.currentRound + 1);
           });
-        } else if (direction == DismissDirection.startToEnd && game.currentRound > 0) {
+        } else if (direction == DismissDirection.startToEnd &&
+            game.currentRound > 0) {
           setState(() {
             setCurrentRound(game.currentRound - 1);
           });
@@ -106,27 +108,26 @@ class GameScreenState extends State<GameScreen> {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: FlipCardWidget(
-          controller: controller2,
-          front: Card(
+            controller: controller2,
+            front: Card(
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
-                onLongPress: () async {await controller2.flipCard(rand.nextBool());},
+                onLongPress: () async {
+                  await controller2.flipCard(rand.nextBool());
+                },
                 child: game.currentRound == 7 ? endWinner() : cardContent(),
               ),
-          ),
-          back: Card(
-            child: Center(
-              child: Flex(
-                direction: Axis.vertical,
-                children: [
-                  Expanded(
-                    child: SvgPicture.asset("assets/svgs/AL.svg", color: Colors.white, width: 100, fit: BoxFit.scaleDown),
-                  )
-                ]
-              ),
             ),
-          )
-        ),
+            back: Card(
+              child: Center(
+                child: Flex(direction: Axis.vertical, children: [
+                  Expanded(
+                    child: SvgPicture.asset("assets/svgs/AL.svg",
+                        color: Colors.white, width: 100, fit: BoxFit.scaleDown),
+                  )
+                ]),
+              ),
+            )),
       ),
     );
   }
@@ -220,7 +221,8 @@ class GameScreenState extends State<GameScreen> {
                     confettiController: controller,
                     blastDirectionality: BlastDirectionality.explosive,
                   ),
-                  SvgPicture.asset("assets/svgs/crown.svg", fit: BoxFit.fitWidth),
+                  SvgPicture.asset("assets/svgs/crown.svg",
+                      fit: BoxFit.fitWidth),
                   Text(getWinner(), style: const TextStyle(fontSize: 25)),
                 ],
               ),

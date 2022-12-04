@@ -28,15 +28,15 @@ class Game {
     DateTime? dDate,
     int? random,
     int? currentRound,
-  }) => Game(
+  }) =>
+      Game(
           id: id ?? this.id,
           title: title ?? this.title,
           playerList: playerList ?? this.playerList,
           date: date ?? this.date,
           dDate: dDate ?? this.dDate,
           random: random ?? this.random,
-          currentRound: currentRound ?? this.currentRound
-        );
+          currentRound: currentRound ?? this.currentRound);
 
   Future<Game> gameWithPlayers() async {
     final playerList = await SqlHelper.getPlayers(id!);
@@ -55,11 +55,11 @@ class Game {
   }
 
   static Game fromMap(Map<String, Object?> map) => Game(
-    id: map['g_id'] as int?,
-    title: map['title'] as String,
-    date: DateTime.tryParse(map['date'].toString()) as DateTime,
-    dDate: DateTime.tryParse(map['d_date'].toString()),
-    random: map['random'] as int,
-    currentRound: map['current_round'] as int,
-  );
+        id: map['g_id'] as int?,
+        title: map['title'] as String,
+        date: DateTime.tryParse(map['date'].toString()) as DateTime,
+        dDate: DateTime.tryParse(map['d_date'].toString()),
+        random: map['random'] as int,
+        currentRound: map['current_round'] as int,
+      );
 }

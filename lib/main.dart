@@ -13,13 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
         builder: (ColorScheme? lightColorScheme, ColorScheme? darkColorScheme) {
-          return MaterialApp(
-            title: 'Apunto yo!',
-            theme: AppTheme.lightTheme(lightColorScheme),
-            darkTheme: AppTheme.darkTheme(darkColorScheme),
-            home: const HomeScreen(),
-          );
-        }
-    );
+      return MaterialApp(
+        title: 'Apunto yo!',
+        theme: AppTheme.lightTheme(lightColorScheme),
+        darkTheme: AppTheme.darkTheme(darkColorScheme),
+        home: const HomeScreen(),
+      );
+    });
   }
 }

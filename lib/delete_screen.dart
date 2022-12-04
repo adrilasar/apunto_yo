@@ -1,6 +1,7 @@
 import 'package:apunto_yo/place_holder.dart';
 import 'package:apunto_yo/sql_helper.dart';
 import 'package:flutter/material.dart';
+
 import 'game.dart';
 
 class DeleteScreen extends StatefulWidget {
@@ -28,83 +29,102 @@ class DeleteScreenState extends State<DeleteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _isLoading ? buildPlaceHolder() : buildList(context)
-    );
+    return Scaffold(body: _isLoading ? buildPlaceHolder() : buildList(context));
   }
 
   Widget buildList(BuildContext context) {
-    if(games.isEmpty) {
-      return CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
+    if (games.isEmpty) {
+      return CustomScrollView(slivers: <Widget>[
+        SliverAppBar(
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Papelera', style: Theme.of(context).textTheme.titleLarge,)
-            ),
+                title: Text(
+              'Papelera',
+              style: Theme.of(context).textTheme.titleLarge,
+            )),
             pinned: true,
-            expandedHeight: 120.0
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 260),
-                  child: Flex(
-                    mainAxisSize: MainAxisSize.min,
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: Text('No hay partidas borradas',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60)),
-                        ),
+            expandedHeight: 120.0),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 260),
+                child: Flex(
+                  mainAxisSize: MainAxisSize.min,
+                  direction: Axis.vertical,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: Text(
+                        'No hay partidas borradas',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.color
+                                    ?.withAlpha(60)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Icon(Icons.delete_outlined, size: 50, color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60),),
-                      )
-                    ],
-                  ),
-                );
-              },
-              childCount: 1,
-            ),
-          )
-        ]);
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Icon(
+                        Icons.delete_outlined,
+                        size: 50,
+                        color: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.color
+                            ?.withAlpha(60),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+            childCount: 1,
+          ),
+        )
+      ]);
     }
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text('Papelera', style: Theme.of(context).textTheme.titleLarge,)
-          ),
-          pinned: true,
-          expandedHeight: 120.0
-        ),
+            flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+              'Papelera',
+              style: Theme.of(context).textTheme.titleLarge,
+            )),
+            pinned: true,
+            expandedHeight: 120.0),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              if(index==0){
+              if (index == 0) {
                 return Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 15, 15, 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.delete_outline, size: 30,),
-                          Flexible(
-                            child: Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 15, 15, 0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.delete_outline,
+                              size: 30,
+                            ),
+                            Flexible(
+                                child: Padding(
                               padding: const EdgeInsets.only(left: 15),
-                              child: Text('Las partidas que lleven más de 30 días en la papelera se eliminarán automaticamente.',
-                                        style: Theme.of(context).textTheme.bodyMedium),
-                            )
-                          ),
-                        ],
-                      )
-                    ),
+                              child: Text(
+                                  'Las partidas que lleven más de 30 días en la papelera se eliminarán automaticamente.',
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                            )),
+                          ],
+                        )),
                     const Divider(
                       indent: 10,
                       endIndent: 10,
@@ -123,6 +143,7 @@ class DeleteScreenState extends State<DeleteScreen> {
       ],
     );
   }
+
   Padding buildDeletedCard(Game game, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -149,10 +170,7 @@ class DeleteScreenState extends State<DeleteScreen> {
                   child: Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 9,
-                    children: const [
-                      Icon(Icons.restore),
-                      Text('Restaurar')
-                    ],
+                    children: const [Icon(Icons.restore), Text('Restaurar')],
                   ),
                 ),
               ],
@@ -166,7 +184,8 @@ class DeleteScreenState extends State<DeleteScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Text(game.title, style: Theme.of(context).textTheme.titleMedium),
+                    child: Text(game.title,
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                 ),
               ),
@@ -176,8 +195,7 @@ class DeleteScreenState extends State<DeleteScreen> {
                   children: [
                     const Padding(
                         padding: EdgeInsets.only(left: 12),
-                        child: Icon(Icons.circle_outlined, size: 55)
-                    ),
+                        child: Icon(Icons.circle_outlined, size: 55)),
                     SizedBox(
                         width: 250,
                         child: GridView.builder(
@@ -185,24 +203,23 @@ class DeleteScreenState extends State<DeleteScreen> {
                             primary: false,
                             shrinkWrap: true,
                             itemCount: game.playerList?.length ?? 0,
-                            gridDelegate: const  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisSpacing: 19,
-                                crossAxisCount: 2,
-                                mainAxisExtent: 30
-                            ),
-                            itemBuilder: (BuildContext context, int index){
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisSpacing: 19,
+                                    crossAxisCount: 2,
+                                    mainAxisExtent: 30),
+                            itemBuilder: (BuildContext context, int index) {
                               return Card(
                                 elevation: 0,
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Text(game.playerList![index].name,
-                                        style: Theme.of(context).textTheme.bodyMedium)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium)),
                               );
-                            }
-                        )
-                    )
-                  ]
-              ),
+                            }))
+                  ]),
               //A sized box with creation date and delete date
               SizedBox(
                 height: 36,
@@ -221,7 +238,6 @@ class DeleteScreenState extends State<DeleteScreen> {
                                   style: Theme.of(context).textTheme.bodySmall),
                             ),
                             const Icon(Icons.add_circle, size: 18)
-
                           ],
                         ),
                       ),
@@ -256,15 +272,12 @@ Widget buildPlaceHolder() {
   return CustomScrollView(
     slivers: <Widget>[
       const SliverAppBar(
-          flexibleSpace: FlexibleSpaceBar(
-              title: Text('Papelera')
-          ),
+          flexibleSpace: FlexibleSpaceBar(title: Text('Papelera')),
           pinned: true,
-          expandedHeight: 120.0
-      ),
+          expandedHeight: 120.0),
       SliverList(
         delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+          (BuildContext context, int index) {
             return const Padding(
               padding: EdgeInsets.all(8.0),
               child: SizedBox(
@@ -282,18 +295,19 @@ Widget buildPlaceHolder() {
 
 String getDate(Game game) {
   String result;
-  result = "${game.date.day}/${game.date.month}/${game.date.year}   ${game.date.hour}:${game.date.minute}";
+  result =
+      "${game.date.day}/${game.date.month}/${game.date.year}   ${game.date.hour}:${game.date.minute}";
   return result;
 }
 
 String getDeleteDate(Game game) {
   String result;
-  result = "${game.dDate!.day}/${game.dDate!.month}/${game.dDate!.year}   ${game.dDate!.hour}:${game.dDate!.minute}";
+  result =
+      "${game.dDate!.day}/${game.dDate!.month}/${game.dDate!.year}   ${game.dDate!.hour}:${game.dDate!.minute}";
   return result;
 }
 
 class CreateBar extends StatelessWidget {
-
   final double barHeight = 66.0;
 
   const CreateBar({super.key});
@@ -310,7 +324,7 @@ class CreateBar extends StatelessWidget {
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
               backgroundColor: Theme.of(context).colorScheme.primary,
             ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-            onPressed: () {  },
+            onPressed: () {},
             child: const Text('Iniciar'),
           ),
         ),

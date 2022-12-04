@@ -13,9 +13,9 @@ class Player {
 
   ///Convert a [Player] into a [Map].
   Map<String, dynamic> toMap() {
-    String parseScores(){
+    String parseScores() {
       String scoresString = '';
-      for (int i = 0; i <= 6; i++){
+      for (int i = 0; i <= 6; i++) {
         scoresString += '${scores[i]},';
       }
       return scoresString;

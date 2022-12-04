@@ -36,69 +36,74 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           title: Stack(
-              children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(_createRoute(const RulesScreen(), -1, 0))
-                            .then((value) => refreshGames());
-                      },
-                      icon: const Icon(Icons.menu_book_outlined),
-                      color: Theme.of(context).disabledColor,
-                    )),
-                Align(
-                  alignment: Alignment.center,
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Image.asset('assets/launcher_icon/foreground.png', height: 50, width: 50,),
-                      getTitle(),
-                    ],
-                  ),
+            children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(_createRoute(const RulesScreen(), -1, 0))
+                          .then((value) => refreshGames());
+                    },
+                    icon: const Icon(Icons.menu_book_outlined),
+                    color: Theme.of(context).disabledColor,
+                  )),
+              Align(
+                alignment: Alignment.center,
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/launcher_icon/foreground.png',
+                      height: 50,
+                      width: 50,
+                    ),
+                    getTitle(),
+                  ],
                 ),
-                Align(
+              ),
+              Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(_createRoute(const DeleteScreen(), 1, 0))
-                            .then((value) => refreshGames());
-                      },
-                      icon: const Icon(Icons.auto_delete_outlined),
-                      color: Theme.of(context).disabledColor,
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(_createRoute(const DeleteScreen(), 1, 0))
+                          .then((value) => refreshGames());
+                    },
+                    icon: const Icon(Icons.auto_delete_outlined),
+                    color: Theme.of(context).disabledColor,
                   ))
-              ],
+            ],
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             //Inserts the returned Game of the CreateScreen into the database
-            Navigator.of(context).push(_createRoute(const CreateScreen(), 0, 1))
+            Navigator.of(context)
+                .push(_createRoute(const CreateScreen(), 0, 1))
                 .then((value) => refreshGames());
           },
           label: const Text('Nueva'),
           icon: const Icon(Icons.add),
         ),
-
-        body: _isLoading ? buildPlaceHolder() : buildList(context)
-    );
+        body: _isLoading ? buildPlaceHolder() : buildList(context));
   }
 
   Padding buildPlaceHolder() {
     return Padding(
-        padding: const EdgeInsets.only(top: 15),
-        child: Column(children: const [
-          Flexible(child: CardPlaceH()),
-          Flexible(child: CardPlaceH()),
-          Flexible(child: CardPlaceH())
-        ]),
-      );
+      padding: const EdgeInsets.only(top: 15),
+      child: Column(children: const [
+        Flexible(child: CardPlaceH()),
+        Flexible(child: CardPlaceH()),
+        Flexible(child: CardPlaceH())
+      ]),
+    );
   }
 
   Widget buildList(BuildContext context) {
-    if(games.isEmpty) {
+    if (games.isEmpty) {
       return Center(
         child: Wrap(
           direction: Axis.vertical,
@@ -107,8 +112,20 @@ class HomeScreenState extends State<HomeScreen> {
           spacing: 20,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Text('Crea una partida', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60))),
-            Icon(Icons.add, size: 50, color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60),)
+            Text('Crea una partida',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.color
+                        ?.withAlpha(60))),
+            Icon(Icons.add,
+                size: 50,
+                color: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.color
+                    ?.withAlpha(60))
           ],
         ),
       );
@@ -116,16 +133,17 @@ class HomeScreenState extends State<HomeScreen> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: games.length,
-        itemBuilder: (BuildContext context, int index){
-          if(index==0){
+        itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
             return Column(
               children: [
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                       padding: EdgeInsets.fromLTRB(14, 15, 0, 0),
-                      child: Text("Tus partidas", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold))
-                  ),
+                      child: Text("Tus partidas",
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.bold))),
                 ),
                 createDismissible(index)
               ],
@@ -135,23 +153,25 @@ class HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  Dismissible createDismissible(index){
+  Dismissible createDismissible(index) {
     Game deletedItem;
 
     return Dismissible(
       key: ObjectKey(games[index]),
-      background: Container(color: Colors.red, child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(right: 28.0),
-            child: Icon(Icons.delete_outline_rounded),
-          ),
-        ],
-      )),
+      background: Container(
+          color: Colors.red,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Padding(
+                padding: EdgeInsets.only(right: 28.0),
+                child: Icon(Icons.delete_outline_rounded),
+              ),
+            ],
+          )),
       direction: DismissDirection.endToStart,
       child: buildCard(index),
-      onDismissed: (direction){
+      onDismissed: (direction) {
         setState(() {
           deletedItem = games.removeAt(index);
           deletedItem.dDate = DateTime.now();
@@ -164,12 +184,11 @@ class HomeScreenState extends State<HomeScreen> {
                   textColor: Theme.of(context).bottomAppBarColor,
                   label: 'Deshacer',
                   onPressed: () => setState(() => {
-                    games.insert(index, deletedItem),
-                    deletedItem.dDate = null,
-                    SqlHelper.updateGame(deletedItem),
-                    refreshGames()
-                  })
-              ),
+                        games.insert(index, deletedItem),
+                        deletedItem.dDate = null,
+                        SqlHelper.updateGame(deletedItem),
+                        refreshGames()
+                      })),
             ),
           );
         });
@@ -186,7 +205,8 @@ class HomeScreenState extends State<HomeScreen> {
         elevation: ended ? 1 : 4,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () => Navigator.of(context).push(_createRoute(GameScreen(id: games[gIndex].id!), 1, 0))
+          onTap: () => Navigator.of(context)
+              .push(_createRoute(GameScreen(id: games[gIndex].id!), 1, 0))
               .then((value) => refreshGames()),
           child: Column(
             children: [
@@ -196,7 +216,8 @@ class HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Text(games[gIndex].title, style: Theme.of(context).textTheme.titleMedium),
+                    child: Text(games[gIndex].title,
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                 ),
               ),
@@ -210,12 +231,19 @@ class HomeScreenState extends State<HomeScreen> {
                           width: 65,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadiusDirectional.circular(40),
-                              color: Theme.of(context).scaffoldBackgroundColor
-                          ),
-                          child: Text(games[gIndex].playerList!.length.toString(), style: TextStyle(fontSize: 35, fontFamily: 'RobotoCondensed', color: Theme.of(context).buttonTheme.colorScheme?.primary)),
-                        )
-                    ),
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(40),
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          child: Text(
+                              games[gIndex].playerList!.length.toString(),
+                              style: TextStyle(
+                                  fontSize: 35,
+                                  fontFamily: 'RobotoCondensed',
+                                  color: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary)),
+                        )),
                     SizedBox(
                         width: 250,
                         child: GridView.builder(
@@ -223,25 +251,28 @@ class HomeScreenState extends State<HomeScreen> {
                             primary: false,
                             shrinkWrap: true,
                             itemCount: games[gIndex].playerList?.length ?? 0,
-                            gridDelegate: const  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisSpacing: 19,
-                                crossAxisCount: 2,
-                                mainAxisExtent: 30
-                            ),
-                            itemBuilder: (BuildContext context, int index){
-                              String pName = games[gIndex].playerList![index].name;
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisSpacing: 19,
+                                    crossAxisCount: 2,
+                                    mainAxisExtent: 30),
+                            itemBuilder: (BuildContext context, int index) {
+                              String pName =
+                                  games[gIndex].playerList![index].name;
                               return Card(
                                 elevation: 0,
                                 child: Align(
                                     alignment: Alignment.center,
-                                    child: Text(ended && index == winner ? "👑 $pName" : pName,
-                                        style: Theme.of(context).textTheme.bodyMedium)),
+                                    child: Text(
+                                        ended && index == winner
+                                            ? "👑 $pName"
+                                            : pName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium)),
                               );
-                            }
-                        )
-                    )
-                  ]
-              ),
+                            }))
+                  ]),
               SizedBox(
                 height: 36,
                 child: Align(
@@ -276,7 +307,8 @@ class HomeScreenState extends State<HomeScreen> {
         const end = Offset.zero;
         const curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -290,12 +322,12 @@ class HomeScreenState extends State<HomeScreen> {
   int getWinner(int gIndex) {
     int winner = 0;
     int min = 0;
-    for(int i = 0; i < games[gIndex].playerList!.length; i++){
+    for (int i = 0; i < games[gIndex].playerList!.length; i++) {
       int total = 0;
-      for(int j = 0; j < games[gIndex].playerList![i].scores.length; j++){
+      for (int j = 0; j < games[gIndex].playerList![i].scores.length; j++) {
         total += games[gIndex].playerList![i].scores[j]!;
       }
-      if(total < min){
+      if (total < min) {
         min = total;
         winner = i;
       }
@@ -303,13 +335,16 @@ class HomeScreenState extends State<HomeScreen> {
     return winner;
   }
 
-  Widget getTitle(){
+  Widget getTitle() {
     return GestureDetector(
       onLongPress: () => checkSteps(0),
       onDoubleTap: () => checkSteps(1),
       child: Text(
         "Apunto yo!",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontFamily: 'RobotoCondensed'),
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(fontFamily: 'RobotoCondensed'),
       ),
     );
   }
@@ -334,13 +369,12 @@ class HomeScreenState extends State<HomeScreen> {
   /// Sets the value of the given [step] to true.
   /// If all steps are true, the dialog is shown.
   checkSteps(int step) {
-    if(step == 0){
+    if (step == 0) {
       setState(() => s1 = true);
-    }
-    else if(step == 1){
+    } else if (step == 1) {
       setState(() => s2 = true);
     }
-    if(s1 && s2){
+    if (s1 && s2) {
       setState(() => s1 = s2 = false);
       showDialog(
         context: context,
@@ -348,5 +382,4 @@ class HomeScreenState extends State<HomeScreen> {
       );
     }
   }
-
 }

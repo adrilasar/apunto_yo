@@ -21,16 +21,14 @@ class SqlHelper {
               random INTEGER NOT NULL,
               current_round INTEGER NOT NULL
           )
-          '''
-        );
+          ''');
         //A game is automatically deleted after 30 days
         db.execute('''
           CREATE TRIGGER delete_game AFTER INSERT ON game
           BEGIN
             DELETE FROM game WHERE d_date < date('now', '-30 days');
           END
-          '''
-        );
+          ''');
         db.execute('''
           CREATE TABLE player (
             p_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,8 +37,7 @@ class SqlHelper {
             g_id INTEGER NOT NULL,
             FOREIGN KEY(g_id) REFERENCES game(g_id)
           )
-          '''
-        );
+          ''');
       },
       version: 1,
     );
@@ -60,7 +57,8 @@ class SqlHelper {
   ///Returns a list of all games without d_date after inserting the players
   static Future<List<Game>> getGames() async {
     final db = await SqlHelper.db();
-    final List<Map<String, dynamic>> maps = await db.query('game', where: 'd_date IS NULL', orderBy: 'date DESC');
+    final List<Map<String, dynamic>> maps =
+        await db.query('game', where: 'd_date IS NULL', orderBy: 'date DESC');
 
     List<Game> games = List.generate(maps.length, (i) {
       return Game.fromMap(maps[i]);
@@ -75,7 +73,8 @@ class SqlHelper {
 
   static Future<List<Game>> getDeletedGames() async {
     final db = await SqlHelper.db();
-    final List<Map<String, dynamic>> maps = await db.query('game', where: 'd_date IS NOT NULL');
+    final List<Map<String, dynamic>> maps =
+        await db.query('game', where: 'd_date IS NOT NULL');
 
     List<Game> games = List.generate(maps.length, (i) {
       return Game.fromMap(maps[i]);
@@ -92,12 +91,8 @@ class SqlHelper {
   static Future<Game> getGame(int id) async {
     final db = await SqlHelper.db();
 
-    final maps = await db.query(
-      'game',
-      where: 'g_id = ?',
-      whereArgs: [id],
-      limit: 1
-    );
+    final maps =
+        await db.query('game', where: 'g_id = ?', whereArgs: [id], limit: 1);
     return Game.fromMap(maps.first).gameWithPlayers();
   }
 

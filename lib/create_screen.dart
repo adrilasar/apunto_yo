@@ -24,19 +24,17 @@ class CreateScreenState extends State<CreateScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-           SliverAppBar(
+          SliverAppBar(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(6.0),
-                  child:
-                  FloatingActionButton.small(
+                  child: FloatingActionButton.small(
                     onPressed: () {
                       if (players.isNotEmpty) {
                         createGame();
-                      }
-                      else {
+                      } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("No hay jugadores"),
@@ -53,18 +51,19 @@ class CreateScreenState extends State<CreateScreen> {
             pinned: true,
             expandedHeight: 120.0,
             flexibleSpace: FlexibleSpaceBar(
-              title: SizedBox(
-                height: 48,
-                width: 160,
-                child: TextField(
-                    autofocus: true,
-                    decoration: const InputDecoration(hintText: "Escribe un título"),
-                    controller: titleText),
-              )
-            ),
+                title: SizedBox(
+              height: 48,
+              width: 160,
+              child: TextField(
+                  autofocus: true,
+                  decoration:
+                      const InputDecoration(hintText: "Escribe un título"),
+                  controller: titleText),
+            )),
           ),
-          if(players.isEmpty) SliverToBoxAdapter(
-            child: Center(
+          if (players.isEmpty)
+            SliverToBoxAdapter(
+                child: Center(
               heightFactor: 5,
               child: Wrap(
                 direction: Axis.vertical,
@@ -73,24 +72,42 @@ class CreateScreenState extends State<CreateScreen> {
                 spacing: 20,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Text('Añade los jugadores', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60))),
-                  Icon(Icons.add_reaction_outlined, size: 50, color: Theme.of(context).textTheme.headlineSmall?.color?.withAlpha(60),)
+                  Text('Añade los jugadores',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.color
+                                  ?.withAlpha(60))),
+                  Icon(
+                    Icons.add_reaction_outlined,
+                    size: 50,
+                    color: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.color
+                        ?.withAlpha(60),
+                  )
                 ],
               ),
             )),
           SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
-                if (players.isNotEmpty) {
-                  return Padding(
-                    padding: index%2 == 0 ? const EdgeInsets.only(left: 25) : const EdgeInsets.only(right: 25),
-                    child: buildPlayerChip(index),
-                  );
-                }
-                return null;
-              },
-              childCount: players.length
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              if (players.isNotEmpty) {
+                return Padding(
+                  padding: index % 2 == 0
+                      ? const EdgeInsets.only(left: 25)
+                      : const EdgeInsets.only(right: 25),
+                  child: buildPlayerChip(index),
+                );
+              }
+              return null;
+            }, childCount: players.length),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
           )
         ],
       ),
@@ -122,7 +139,9 @@ class CreateScreenState extends State<CreateScreen> {
                   TextButton(
                     onPressed: () {
                       //Adds a player to the list if its name is not empty and is not already in the list
-                      if (playerText.text.isNotEmpty &&!players.any((player) => player.name == playerText.text)) {
+                      if (playerText.text.isNotEmpty &&
+                          !players.any(
+                              (player) => player.name == playerText.text)) {
                         setState(() {
                           players.add(Player(name: playerText.text));
                         });
@@ -144,11 +163,12 @@ class CreateScreenState extends State<CreateScreen> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(40),
-              color: Theme.of(context).scaffoldBackgroundColor
-          ),
+              color: Theme.of(context).scaffoldBackgroundColor),
           child: const Icon(Icons.add_reaction_outlined, size: 20),
         ),
-        label: Text('Añadir jugador', style: TextStyle(fontSize: Theme.of(context).textTheme.button?.fontSize)),
+        label: Text('Añadir jugador',
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.button?.fontSize)),
         elevation: 12,
       ),
     );
@@ -167,7 +187,8 @@ class CreateScreenState extends State<CreateScreen> {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Eliminar jugador'),
-                content: Text('¿Estás seguro de que quieres eliminar a ${players[index].name}?'),
+                content: Text(
+                    '¿Estás seguro de que quieres eliminar a ${players[index].name}?'),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -196,49 +217,48 @@ class CreateScreenState extends State<CreateScreen> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(40),
-              color: Theme.of(context).scaffoldBackgroundColor
-          ),
-          child: Text(players[index].name.characters.first, style: TextStyle(fontSize: 25, fontFamily: 'RobotoCondensed', color: Theme.of(context).buttonTheme.colorScheme?.primary)),
+              color: Theme.of(context).scaffoldBackgroundColor),
+          child: Text(players[index].name.characters.first,
+              style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: 'RobotoCondensed',
+                  color: Theme.of(context).buttonTheme.colorScheme?.primary)),
         ),
         label: Text(players[index].name),
         elevation: 8,
       ),
-      onDismissed: (direction){
+      onDismissed: (direction) {
         setState(() {
           players.removeAt(index);
         });
       },
     );
   }
+
   void createGame() {
-    saveGame(
-      Game(
-        title: titleText.text,
-        playerList: players,
-        date: DateTime.now(),
-        random: Random().nextInt(100),
-        currentRound: 0,
-      )
-    ).then(
-      (value) => Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => GameScreen(id: value),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              var begin = const Offset(1, 0);
-              const end = Offset.zero;
-              const curve = Curves.ease;
+    saveGame(Game(
+      title: titleText.text,
+      playerList: players,
+      date: DateTime.now(),
+      random: Random().nextInt(100),
+      currentRound: 0,
+    )).then((value) => Navigator.of(context).pushReplacement(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              GameScreen(id: value),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            var begin = const Offset(1, 0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
 
-              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-              return SlideTransition(
-                position: animation.drive(tween),
-                child: child,
-              );
-              },
-          )
-      )
-    );
-
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        )));
   }
 
   Future<int> saveGame(Game game) async {
