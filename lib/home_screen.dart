@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:apunto_yo/game_screen.dart';
 import 'package:apunto_yo/place_holder.dart';
 import 'package:apunto_yo/rules_screen.dart';
 import 'package:apunto_yo/sql_helper.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
 import 'create_screen.dart';
@@ -18,13 +21,21 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late List<Game> games;
   bool _isLoading = false;
+  late final ConfettiController controller;
   bool s1 = false;
   bool s2 = false;
 
   @override
   void initState() {
     super.initState();
+    controller = ConfettiController(duration: const Duration(seconds: 4));
     refreshGames();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   Future refreshGames() async {
@@ -349,16 +360,25 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getDonateDialog() {
+  Widget getStepsDialog() {
     return AlertDialog(
       title: const Text(
-        'Donate',
+        '¡ Felicidades ! 🐣',
       ),
-      content: const Text('Please consider donating to support our cause.'),
+      content: const Text(
+          'Has encontrado el menú oculto.\n\n¡Eres un auténtico campeón en perder el tiempo!'),
       actions: <Widget>[
+        ConfettiWidget(
+          shouldLoop: false,
+          confettiController: controller,
+          blastDirectionality: BlastDirectionality.directional,
+          blastDirection: 52 * pi / 36,
+          minBlastForce: 40,
+          maxBlastForce: 70,
+        ),
         TextButton(
           child: const Text(
-            'Atrás',
+            'Volver',
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -375,10 +395,10 @@ class HomeScreenState extends State<HomeScreen> {
       setState(() => s2 = true);
     }
     if (s1 && s2) {
-      setState(() => s1 = s2 = false);
+      setState(() => {s1 = s2 = false, controller.play()});
       showDialog(
         context: context,
-        builder: (BuildContext context) => getDonateDialog(),
+        builder: (BuildContext context) => getStepsDialog(),
       );
     }
   }
