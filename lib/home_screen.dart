@@ -210,7 +210,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget buildCard(int gIndex) {
     bool ended = games[gIndex].currentRound == 7;
-    int winner = getWinner(gIndex);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -276,7 +275,7 @@ class HomeScreenState extends State<HomeScreen> {
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                        ended && index == winner
+                                        ended && index == getWinner(gIndex)
                                             ? "👑 $pName"
                                             : pName,
                                         style: Theme.of(context)
@@ -333,7 +332,7 @@ class HomeScreenState extends State<HomeScreen> {
   // Devuelve el index del jugador cuya suma de puntos de todas las rondas es menor
   int getWinner(int gIndex) {
     int winner = 0;
-    int min = 0;
+    int min = double.maxFinite.toInt();
     for (int i = 0; i < games[gIndex].playerList!.length; i++) {
       int total = 0;
       for (int j = 0; j < games[gIndex].playerList![i].scores.length; j++) {
