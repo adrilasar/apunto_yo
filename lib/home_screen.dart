@@ -6,6 +6,7 @@ import 'package:apunto_yo/rules_screen.dart';
 import 'package:apunto_yo/sql_helper.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'create_screen.dart';
 import 'delete_screen.dart';
@@ -361,6 +362,9 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget getStepsDialog() {
+    HapticFeedback.lightImpact()
+        .then((value) => HapticFeedback.heavyImpact())
+        .then((value) => HapticFeedback.lightImpact());
     return AlertDialog(
       title: const Text(
         '¡ Felicidades ! 🐣',
