@@ -94,7 +94,8 @@ class HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             //Inserts the returned Game of the CreateScreen into the database
             Navigator.of(context)
-                .push(_createRoute(const CreateScreen(), 0, 1))
+                .push(_createRoute(
+                    CreateScreen(refreshGames: refreshGames), 0, 1))
                 .then((value) => refreshGames());
           },
           label: const Text('Nueva'),

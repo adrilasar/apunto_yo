@@ -8,7 +8,9 @@ import 'game.dart';
 import 'game_screen.dart';
 
 class CreateScreen extends StatefulWidget {
-  const CreateScreen({super.key});
+  final Function refreshGames;
+
+  const CreateScreen({super.key, required this.refreshGames});
 
   @override
   CreateScreenState createState() => CreateScreenState();
@@ -242,7 +244,8 @@ class CreateScreenState extends State<CreateScreen> {
       date: DateTime.now(),
       random: Random().nextInt(100),
       currentRound: 0,
-    )).then((value) => Navigator.of(context).pushReplacement(PageRouteBuilder(
+    )).then((value) => Navigator.of(context)
+        .pushReplacement(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               GameScreen(id: value),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -258,7 +261,8 @@ class CreateScreenState extends State<CreateScreen> {
               child: child,
             );
           },
-        )));
+        ))
+        .then((value) => widget.refreshGames()));
   }
 
   Future<int> saveGame(Game game) async {
