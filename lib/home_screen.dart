@@ -390,8 +390,8 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// Sets the value of the given [step] to true.
-  /// If all steps are true, the dialog is shown.
+  /// Sets the value of the given [step] to `true`.
+  /// If all steps are `true`, the dialog is shown.
   checkSteps(int step) {
     if (step == 0) {
       setState(() => s1 = true);

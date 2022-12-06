@@ -43,7 +43,7 @@ class Game {
     return copy(playerList: playerList);
   }
 
-  ///Convert a [Game] into a [Map].
+  /// Returns a [Map] representation of the [Game].
   Map<String, dynamic> toMap() {
     return {
       'title': title,

@@ -11,7 +11,7 @@ class Player {
     required this.name,
   });
 
-  ///Convert a [Player] into a [Map].
+  /// Returns a [Map] representation of the [Player].
   Map<String, dynamic> toMap() {
     String parseScores() {
       String scoresString = '';

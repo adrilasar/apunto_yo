@@ -184,16 +184,16 @@ class GameScreenState extends State<GameScreen> {
     );
   }
 
-  /// Devuelve los puntos de un jugador en la ronda dada.
+  /// Returns the points of a player ([rIndex]) in the given round ([pIndex]).
   int? getRoundScore(int pIndex, int rIndex) {
     return game.playerList![pIndex].scores[rIndex];
   }
 
-  /// Devuelve la suma de los puntos de un jugador de todas las rondas anteriores a la actual.
-  int? getTotalScore(int index) {
+  /// Returns the sum of the points from a given [Player] ([pIndex]) of all previous rounds.
+  int? getTotalScore(int pIndex) {
     int? score = 0;
     for (int i = 0; i <= game.currentRound && i != 7; i++) {
-      score = score! + game.playerList![index].scores[i]!;
+      score = score! + game.playerList![pIndex].scores[i]!;
     }
     return score;
   }

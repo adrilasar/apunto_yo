@@ -22,7 +22,7 @@ class SqlHelper {
               current_round INTEGER NOT NULL
           )
           ''');
-        //A game is automatically deleted after 30 days
+        // A game is automatically deleted after 30 days
         db.execute('''
           CREATE TRIGGER delete_game AFTER INSERT ON game
           BEGIN
@@ -43,7 +43,7 @@ class SqlHelper {
     );
   }
 
-  /// Inserts a game into the database
+  /// Inserts a [Game] into the db.
   static Future<int> createGame(Game game) async {
     final db = await SqlHelper.db();
 
@@ -54,7 +54,7 @@ class SqlHelper {
     );
   }
 
-  ///Returns a list of all games without d_date after inserting the players
+  /// Returns a list of all games without `d_date` with its players inserted.
   static Future<List<Game>> getGames() async {
     final db = await SqlHelper.db();
     final List<Map<String, dynamic>> maps =
@@ -71,6 +71,7 @@ class SqlHelper {
     return games;
   }
 
+  /// Returns a list of all games with a `d_date` set.
   static Future<List<Game>> getDeletedGames() async {
     final db = await SqlHelper.db();
     final List<Map<String, dynamic>> maps =
@@ -87,7 +88,7 @@ class SqlHelper {
     return games;
   }
 
-  /// Retrieves a game from the db with its players
+  /// Returns a [Game] with the given [id] with its players inserted.
   static Future<Game> getGame(int id) async {
     final db = await SqlHelper.db();
 
@@ -96,7 +97,7 @@ class SqlHelper {
     return Game.fromMap(maps.first).gameWithPlayers();
   }
 
-  /// Deletes the given game and its players from the db.
+  /// Deletes the game with the given [id] and its associated players from the db.
   static Future<void> deleteGame(int id) async {
     final db = await SqlHelper.db();
 
@@ -112,6 +113,7 @@ class SqlHelper {
     );
   }
 
+  /// Updates the given [Game] in the db.
   static void updateGame(Game game) async {
     final db = await SqlHelper.db();
 
@@ -123,7 +125,7 @@ class SqlHelper {
     );
   }
 
-  /// Inserts a player into the database
+  /// Inserts a [Player] into the db.
   static Future<Player> createPlayer(Player player) async {
     final db = await SqlHelper.db();
 
@@ -135,21 +137,21 @@ class SqlHelper {
     return player.copy(id: id);
   }
 
-  /// Retrieves all the players of a given game from the db.
-  static Future<List<Player>> getPlayers(int gameId) async {
+  /// Returns the [Player] list of the [Game] with the given [gId].
+  static Future<List<Player>> getPlayers(int gId) async {
     final db = await SqlHelper.db();
 
     final List<Map<String, dynamic>> maps = await db.query(
       'player',
       where: 'g_id = ?',
-      whereArgs: [gameId],
+      whereArgs: [gId],
     );
     return List.generate(maps.length, (i) {
       return Player.fromMap(maps[i]);
     });
   }
 
-  /// Updates the given player from the db.
+  /// Updates the given [player] in the db.
   static Future<void> updatePlayer(Player player) async {
     final db = await SqlHelper.db();
 
