@@ -1,16 +1,47 @@
-# apunto_yo
+<br />
+<p align="center">
+  <a href="https://github.com/adrilasar/NomoD">
+    <img src="assets/launcher_icon/foreground.png" alt="Logo" width="200" height="200" style="border-radius: 35px">
+  </a>
 
-Aplicación para llevar las puntuaciones de tus partidas de continental de la manera mas fácil.
+  <h3 align="center">Apunto Yo!</h3>
 
-## Getting Started
+  <p align="center">
+    Flutter app using Material 3 Dynamic Theming
+    <br />
+    <a href="https://play.google.com/store/apps/details?id=com.adrilasar.apuntoyo"><strong><img src="https://www.svgrepo.com/show/223032/playstore.svg" width="13px" height="13px"/> Android Download</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/adrilasar/apunto_yo/issues/new/choose">Report Issue</a>
+    · <a href="#contributing">Contribute</a>
+  </p>
+</p>
 
-This project is a starting point for a Flutter application.
+## Installation
 
-A few resources to get you started if this is your first Flutter project:
+1. Make sure you have the latest version of Flutter installed on your system. If not, you can install it by following the instructions on the [Flutter website](https://docs.flutter.dev/get-started/install).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Clone the repository to your local machine
+```bash
+git clone https://github.com/adrilasar/apunto_yo.git
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Navigate to the project directory and install the required dependencies
+```bash
+cd <localPath>
+flutter packages get
+```
+
+4. Connect your device or launch an emulator and run the app
+```bash
+flutter run
+```
+
+
+## Contributing
+
+Contributions are welcome on this project. If you have any ideas or suggestions, please feel free to open an issue or create a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
