@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:apunto_yo/game.dart';
-import 'package:apunto_yo/player.dart';
+import 'package:apunto_yo/data/entities/game.dart';
+import 'package:apunto_yo/data/entities/player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';

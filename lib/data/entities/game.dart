@@ -1,5 +1,5 @@
-import 'package:apunto_yo/player.dart';
-import 'package:apunto_yo/sql_helper.dart';
+import 'package:apunto_yo/data/entities/player.dart';
+import 'package:apunto_yo/data/sql_helper.dart';
 
 class Game {
   final int? id;
@@ -62,4 +62,33 @@ class Game {
         random: map['random'] as int,
         currentRound: map['current_round'] as int,
       );
+
+  /// Returns the index of the [Player] with the lowest sum of points.
+  int getWinner() {
+    int winner = 0;
+    int min = double.maxFinite.toInt();
+    for (int i = 0; i < playerList!.length; i++) {
+      int total = 0;
+      for (int j = 0; j < playerList![i].scores.length; j++) {
+        total += playerList![i].scores[j]!;
+      }
+      if (total < min) {
+        min = total;
+        winner = i;
+      }
+    }
+    return winner;
+  }
+
+  String getDate() {
+    return getFormattedDate(date);
+  }
+
+  String getDeleteDate() {
+    return getFormattedDate(dDate!);
+  }
+
+  String getFormattedDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}   ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  }
 }

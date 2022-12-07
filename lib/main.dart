@@ -1,8 +1,8 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
-import './home_screen.dart';
-import 'app_theme.dart';
+import 'ui/app_theme.dart';
+import 'ui/pages/home/home_screen.dart';
 
 void main() => runApp(const MyApp());
 

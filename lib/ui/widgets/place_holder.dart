@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CardPlaceH extends StatelessWidget {
-  const CardPlaceH({
+class PlaceHolder extends StatelessWidget {
+  const PlaceHolder({
     Key? key,
   }) : super(key: key);
 

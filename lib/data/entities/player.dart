@@ -61,4 +61,18 @@ class Player {
     }
     return scores;
   }
+
+  /// Returns the points of the given round ([rIndex]).
+  int? getRoundScore(int rIndex) {
+    return scores[rIndex];
+  }
+
+  /// Returns the sum of the points from all previous rounds (using getRoundScore()).
+  int? getTotalScore() {
+    int? score = 0;
+    for (int i = 0; i <= 6; i++) {
+      score = score! + getRoundScore(i)!;
+    }
+    return score;
+  }
 }
