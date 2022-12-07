@@ -7,7 +7,7 @@ class PlayerList extends StatelessWidget {
   const PlayerList({
     Key? key,
     required this.players,
-    this.winner = -1,
+    required this.winner,
   }) : super(key: key);
 
   final List<Player> players;

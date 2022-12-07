@@ -65,6 +65,9 @@ class Game {
 
   /// Returns the index of the [Player] with the lowest sum of points.
   int getWinner() {
+    if (currentRound != 7) {
+      return -1;
+    }
     int winner = 0;
     int min = double.maxFinite.toInt();
     for (int i = 0; i < playerList!.length; i++) {
