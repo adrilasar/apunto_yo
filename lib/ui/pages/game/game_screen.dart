@@ -76,34 +76,38 @@ class GameScreenState extends State<GameScreen> {
         }
         return Future.value(false);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: FlipCardWidget(
-            controller: controller2,
-            front: Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onLongPress: () async {
-                  await controller2.flipCard(rand.nextBool());
-                },
-                child: game.currentRound == 7 ? winnerCard() : cardContent(),
-              ),
-            ),
-            back: Card(
-              child: Center(
-                child: Flex(direction: Axis.vertical, children: [
-                  Expanded(
-                    child: SvgPicture.asset("assets/svgs/AL.svg",
-                        color: Colors.white, width: 100, fit: BoxFit.scaleDown),
-                  )
-                ]),
-              ),
-            )),
-      ),
+      child: buildCard(),
     );
   }
 
-  Padding cardContent() {
+  Padding buildCard() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: FlipCardWidget(
+          controller: controller2,
+          front: Card(
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onLongPress: () async {
+                await controller2.flipCard(rand.nextBool());
+              },
+              child: game.currentRound == 7 ? winnerCard() : roundCard(),
+            ),
+          ),
+          back: Card(
+            child: Center(
+              child: Flex(direction: Axis.vertical, children: [
+                Expanded(
+                  child: SvgPicture.asset("assets/svgs/AL.svg",
+                      color: Colors.white, width: 100, fit: BoxFit.scaleDown),
+                )
+              ]),
+            ),
+          )),
+    );
+  }
+
+  Padding roundCard() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: ListView.builder(
