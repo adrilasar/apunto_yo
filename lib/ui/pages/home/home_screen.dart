@@ -1,5 +1,6 @@
 import 'package:apunto_yo/data/sql_helper.dart';
 import 'package:apunto_yo/ui/helper/router.dart';
+import 'package:apunto_yo/ui/pages/home/widgets/create_button.dart';
 import 'package:apunto_yo/ui/pages/home/widgets/home_game_card.dart';
 import 'package:apunto_yo/ui/pages/home/widgets/home_placeholder.dart';
 import 'package:apunto_yo/ui/pages/home/widgets/steps_dialog.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../data/entities/game.dart';
-import '../create/create_screen.dart';
 import '../delete/delete_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -55,17 +55,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            //Inserts the returned Game of the CreateScreen into the database
-            Navigator.of(context)
-                .push(RouteCreator(
-                    CreateScreen(refreshGames: refreshGames), 0, 1))
-                .then((value) => refreshGames());
-          },
-          label: const Text('Nueva'),
-          icon: const Icon(Icons.add),
-        ),
+        floatingActionButton: buildCreateButton(context, this),
         body: _isLoading ? buildHomePlaceholder(context) : buildBody(context));
   }
 
