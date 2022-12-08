@@ -7,9 +7,9 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqlHelper {
-  static Future<Database> db() async {
+  static Future<Database> createDatabaseConnection() async {
     WidgetsFlutterBinding.ensureInitialized();
-    return openDatabase(
+    return await openDatabase(
       join(await getDatabasesPath(), 'la_libreta.db'),
       onCreate: (db, version) {
         db.execute('''
@@ -43,9 +43,11 @@ class SqlHelper {
     );
   }
 
-  /// Inserts a [Game] into the db.
+  /// Creates a new game in the database.
+  ///
+  /// Returns the id of the created game.
   static Future<int> createGame(Game game) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     return await db.insert(
       'game',
@@ -54,9 +56,23 @@ class SqlHelper {
     );
   }
 
+  /// Saves a game and its players to the database.
+  ///
+  /// Returns the id of the saved game.
+  static Future<int> saveGameToDatabase(Game game) async {
+    int id = await SqlHelper.createGame(game);
+    //Inserts each player of the game into the database
+    if (game.playerList != null) {
+      for (Player player in game.playerList!) {
+        await SqlHelper.createPlayer(player.copy(gId: id));
+      }
+    }
+    return id;
+  }
+
   /// Returns a list of all games without `d_date` with its players inserted.
   static Future<List<Game>> getGames() async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
     final List<Map<String, dynamic>> maps =
         await db.query('game', where: 'd_date IS NULL', orderBy: 'date DESC');
 
@@ -73,7 +89,7 @@ class SqlHelper {
 
   /// Returns a list of all games with a `d_date` set.
   static Future<List<Game>> getDeletedGames() async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
     final List<Map<String, dynamic>> maps =
         await db.query('game', where: 'd_date IS NOT NULL');
 
@@ -90,7 +106,7 @@ class SqlHelper {
 
   /// Returns a [Game] with the given [id] with its players inserted.
   static Future<Game> getGame(int id) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     final maps =
         await db.query('game', where: 'g_id = ?', whereArgs: [id], limit: 1);
@@ -99,7 +115,7 @@ class SqlHelper {
 
   /// Deletes the game with the given [id] and its associated players from the db.
   static Future<void> deleteGame(int id) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     await db.delete(
       'game',
@@ -115,7 +131,7 @@ class SqlHelper {
 
   /// Updates the given [Game] in the db.
   static void updateGame(Game game) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     await db.update(
       'game',
@@ -127,7 +143,7 @@ class SqlHelper {
 
   /// Inserts a [Player] into the db.
   static Future<Player> createPlayer(Player player) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     final id = await db.insert(
       'player',
@@ -139,7 +155,7 @@ class SqlHelper {
 
   /// Returns the [Player] list of the [Game] with the given [gId].
   static Future<List<Player>> getPlayers(int gId) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     final List<Map<String, dynamic>> maps = await db.query(
       'player',
@@ -153,7 +169,7 @@ class SqlHelper {
 
   /// Updates the given [player] in the db.
   static Future<void> updatePlayer(Player player) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     await db.update(
       'player',
@@ -165,7 +181,7 @@ class SqlHelper {
 
   /// Deletes the given player from the db.
   static Future<void> deletePlayer(int id) async {
-    final db = await SqlHelper.db();
+    final db = await SqlHelper.createDatabaseConnection();
 
     await db.delete(
       'player',

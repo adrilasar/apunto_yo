@@ -1,6 +1,6 @@
 import 'package:apunto_yo/data/sql_helper.dart';
 import 'package:apunto_yo/ui/pages/delete/widgets/delete_placeholder.dart';
-import 'package:apunto_yo/ui/widgets/game_card.dart';
+import 'package:apunto_yo/ui/pages/delete/widgets/deleted_card.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/entities/game.dart';
@@ -31,7 +31,7 @@ class DeleteScreenState extends State<DeleteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _isLoading ? const DeletePlaceHolder() : buildList(context));
+        body: _isLoading ? buildDeletePlaceholder() : buildList(context));
   }
 
   Widget buildList(BuildContext context) {
@@ -81,11 +81,11 @@ class DeleteScreenState extends State<DeleteScreen> {
                 height: 20,
                 thickness: 2,
               ),
-              buildDeletedCard(games[index], context)
+              buildDeletedCard(context, games[index], this)
             ],
           );
         }
-        return buildDeletedCard(games[index], context);
+        return buildDeletedCard(context, games[index], this);
       },
       childCount: games.length,
     );
@@ -132,44 +132,6 @@ class DeleteScreenState extends State<DeleteScreen> {
         );
       },
       childCount: 1,
-    );
-  }
-
-  Padding buildDeletedCard(Game game, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () => showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: const Icon(Icons.restore_from_trash, size: 60),
-              content: const Text('¿Seguro que quieres restaurar la partida?'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Cancelar'),
-                ),
-                OutlinedButton(
-                  onPressed: () => {
-                    game.dDate = null,
-                    SqlHelper.updateGame(game),
-                    refreshGames(),
-                    Navigator.pop(context, 'Restore')
-                  },
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 9,
-                    children: const [Icon(Icons.restore), Text('Restaurar')],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          child: GameCard(context: context, game: game),
-        ),
-      ),
     );
   }
 }
