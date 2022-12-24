@@ -11,7 +11,7 @@ AlertDialog buildAddDialog(
   return AlertDialog(
     title: const Text('Añadir jugador'),
     content: TextField(
-      maxLength: 14,
+      maxLength: 10,
       autofocus: true,
       controller: playerNameController,
       decoration: const InputDecoration(
