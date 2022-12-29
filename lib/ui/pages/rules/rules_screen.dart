@@ -44,9 +44,12 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text: "Dos barajas inglesas, con 2 o 3 comodines por baraja.\n"
-                    "(También se admiten las de póker españolas)\n\n\n",
+                text: "Dos barajas inglesas, con 2 o 3 comodines por baraja.\n",
                 style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              TextSpan(
+                text: "(También se admiten las de póker españolas)\n\n\n",
+                style: Theme.of(context).textTheme.caption,
               ),
               TextSpan(
                 text: "Valor de las cartas:\n\n",
@@ -75,7 +78,7 @@ class RulesScreenState extends State<RulesScreen> {
               ),
               // Centered text
               const TextSpan(
-                text: "(www.continental.org.es)",
+                text: "Fuente: www.continental.org.es",
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey,
