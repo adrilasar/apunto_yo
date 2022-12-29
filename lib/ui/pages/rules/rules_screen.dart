@@ -44,8 +44,8 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text:
-                    "Dos barajas inglesas, con 2 o 3 comodines por baraja. (También se admiten las de póker españolas)\n\n\n",
+                text: "Dos barajas inglesas, con 2 o 3 comodines por baraja.\n"
+                    "(También se admiten las de póker españolas)\n\n\n",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               TextSpan(
@@ -53,10 +53,10 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text: "Comodín o jóker: 50 puntos\n"
-                    "As: 20 puntos\n"
-                    "Figuras (rey, reina o dama y jota): 10 puntos\n"
-                    "Cartas de 2 a 10: Su valor numérico\n\n\n",
+                text: "• Comodín o jóker: 50 puntos\n"
+                    "• As: 20 puntos\n"
+                    "• Figuras (rey, reina o dama y jota): 10 puntos\n"
+                    "• Cartas de 2 a 10: Su valor numérico\n\n\n",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               TextSpan(
@@ -64,13 +64,13 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text: "1ª (TT): Dos tríos. 7 cartas.\n"
-                    "2ª (TE): Un trío y una escalera. 8 cartas.\n"
-                    "3ª (EE): Dos escaleras. 9 cartas.\n"
-                    "4ª (TTT): Tres tríos. 10 cartas.\n"
-                    "5ª (TET): Dos tríos y una escalera. 11 cartas.\n"
-                    "6ª (ETE): Un trío y dos escaleras. 12 cartas.\n"
-                    "7ª (EEE): Tres escaleras. 13 cartas.\n\n\n",
+                text: "1ª ➜ 2 Tríos  -  7 cartas.\n"
+                    "2ª ➜ Trío y Escalera  -  8 cartas\n"
+                    "3ª ➜ 2 Escaleras  -  9 cartas\n"
+                    "4ª ➜ 3 Tríos  -  10 cartas\n"
+                    "5ª ➜ 2 Tríos y Escalera  -  11 cartas\n"
+                    "6ª ➜ Trío y 2 Escaleras  -  12 cartas\n"
+                    "7ª ➜ 3 Escaleras  -  13 cartas\n\n\n",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               // Centered text
