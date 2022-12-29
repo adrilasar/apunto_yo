@@ -5,7 +5,9 @@ Card buildPlayerChip(BuildContext context, bool isWinner, String pName) {
     elevation: 0,
     child: Align(
         alignment: Alignment.center,
-        child: Text(isWinner ? "👑  $pName" : pName,
-            style: Theme.of(context).textTheme.bodyMedium)),
+        child: FittedBox(
+          child: Text(isWinner ? "👑  $pName" : pName,
+              style: Theme.of(context).textTheme.bodyMedium),
+        )),
   );
 }
