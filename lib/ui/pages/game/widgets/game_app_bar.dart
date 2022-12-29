@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-const List<String> rounds = <String>[
-  "TT - 7 cartas",
-  "TE - 8 cartas",
-  "EE - 9 cartas",
-  "TTT - 10 cartas",
-  "TET - 11 cartas",
-  "ETE - 12 cartas",
-  "EEE - 13 cartas"
+const List<int> cards = <int>[7, 8, 9, 10, 11, 12, 13];
+
+const List<String> objectives = <String>[
+  "2 Tríos",
+  "Trío y Escalera",
+  "2 Escaleras",
+  "3 Tríos",
+  "2 Tríos y Escalera",
+  "Trío y 2 Escaleras",
+  "3 Escaleras",
 ];
 
 AppBar buildAppBar(BuildContext context, int currentRound) {
@@ -18,23 +20,20 @@ AppBar buildAppBar(BuildContext context, int currentRound) {
           child: Text(currentRound == 7 ? "Fin" : "Ronda ${currentRound + 1}")),
       Align(
         alignment: Alignment.centerRight,
-        child: currentRound == 7 ? null : RoundInfo(currentRound: currentRound),
+        child: currentRound == 7 ? null : buildInfo(currentRound, context),
       )
     ]),
   );
 }
 
-class RoundInfo extends StatelessWidget {
-  final int currentRound;
-
-  const RoundInfo({
-    Key? key,
-    required this.currentRound,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(rounds[currentRound],
-        style: Theme.of(context).textTheme.bodyText1);
-  }
+Widget buildInfo(int currentRound, BuildContext context) {
+  // Returns an info icon that shows a tooltip with the round description
+  return Tooltip(
+    triggerMode: TooltipTriggerMode.tap,
+    showDuration: const Duration(seconds: 4),
+    message: """
+Objetivo: ${objectives[currentRound]}
+Nº de Cartas: ${cards[currentRound]}""",
+    child: const Icon(Icons.info_outline_rounded),
+  );
 }
