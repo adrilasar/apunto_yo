@@ -40,6 +40,7 @@ dependencies:
   shimmer: ^2.0.0
   confetti: ^0.7.0
   flutter_svg: ^1.1.5
+  carousel_slider: ^4.1.1
 
 dependency_overrides:
   material_color_utilities: ^0.2.0

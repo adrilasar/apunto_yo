@@ -2,14 +2,12 @@ import 'dart:math';
 
 import 'package:apunto_yo/data/sql_helper.dart';
 import 'package:apunto_yo/ui/pages/game/widgets/game_app_bar.dart';
+import 'package:apunto_yo/ui/pages/game/widgets/round_card.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../data/entities/game.dart';
-import '../../../data/entities/player.dart';
-import '../../widgets/flip_card.dart';
 
 class GameScreen extends StatefulWidget {
   final int id;
@@ -21,8 +19,8 @@ class GameScreen extends StatefulWidget {
 }
 
 class GameScreenState extends State<GameScreen> {
-  late final ConfettiController controller;
-  late final FlipCardController controller2;
+  late final ConfettiController _confettiController;
+  late final CarouselController _carouselController;
   late Game game;
   bool _isLoading = false;
   final Random rand = Random();
@@ -30,21 +28,24 @@ class GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    controller = ConfettiController(duration: const Duration(seconds: 4));
-    controller2 = FlipCardController();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 4));
+    _carouselController = CarouselController();
     refreshGame();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _confettiController.dispose();
     super.dispose();
   }
 
-  Future refreshGame() async {
+  void refreshGame() async {
     setState(() => _isLoading = true);
     game = await SqlHelper.getGame(widget.id);
     setState(() => _isLoading = false);
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _carouselController.jumpToPage(game.currentRound));
   }
 
   @override
@@ -52,146 +53,76 @@ class GameScreenState extends State<GameScreen> {
     return Scaffold(
       appBar: !_isLoading ? buildAppBar(context, game.currentRound) : AppBar(),
       body: !_isLoading ? buildBody() : Container(),
+      bottomNavigationBar: !_isLoading ? buildBottomBar() : Container(),
     );
   }
 
-  Dismissible buildBody() {
-    return Dismissible(
-      key: ObjectKey(game.playerList),
-      //If the user swipes the card to the right, the round is decremented. If the user swipes the card to the left, the round is incremented.
-      confirmDismiss: (direction) {
-        if (direction == DismissDirection.endToStart &&
-            game.currentRound <= 6) {
-          setState(() {
-            if (game.currentRound == 6) {
-              controller.play();
-            }
-            setCurrentRound(game.currentRound + 1);
-          });
-        } else if (direction == DismissDirection.startToEnd &&
-            game.currentRound > 0) {
-          setState(() {
-            setCurrentRound(game.currentRound - 1);
-          });
-        }
-        return Future.value(false);
-      },
-      child: buildCard(),
-    );
-  }
-
-  Padding buildCard() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: FlipCardWidget(
-          controller: controller2,
-          front: Card(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onLongPress: () async {
-                await controller2.flipCard(rand.nextBool());
-              },
-              child: game.currentRound == 7 ? winnerCard() : roundCard(),
-            ),
-          ),
-          back: Card(
-            child: Center(
-              child: Flex(direction: Axis.vertical, children: [
-                Expanded(
-                  child: SvgPicture.asset("assets/svgs/AL.svg",
-                      color: Colors.white, width: 100, fit: BoxFit.scaleDown),
-                )
-              ]),
-            ),
-          )),
-    );
-  }
-
-  Padding roundCard() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: ListView.builder(
-        itemCount: game.playerList!.length,
-        itemBuilder: (context, pIndex) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: buildPlayerInfo(context, game.playerList![pIndex]),
-          );
+  Widget buildBody() {
+    return CarouselSlider(
+      carouselController: _carouselController,
+      options: CarouselOptions(
+        height: MediaQuery.of(context).size.height,
+        viewportFraction: 1,
+        onPageChanged: (index, reason) {
+          if (index == 7) {
+            _confettiController.play();
+          }
+          setState(() => game.currentRound = index);
+          SqlHelper.updateGame(game);
         },
+        enlargeCenterPage: false,
+        enableInfiniteScroll: false,
       ),
+      items: [
+        RoundCard(
+            game: game, rIndex: 0, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 1, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 2, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 3, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 4, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 5, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 6, confettiController: _confettiController),
+        RoundCard(
+            game: game, rIndex: 7, confettiController: _confettiController),
+      ],
     );
   }
 
-  ListTile buildPlayerInfo(BuildContext context, Player player) {
-    return ListTile(
-      //Ask for the number of points of the player in the current round.
-      onTap: () {
-        String input = "";
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("Puntos de ${player.name}"),
-                content: TextField(
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    input = value;
-                  },
-                ),
-                actions: [
-                  TextButton(
-                    child: const Text("OK"),
-                    onPressed: () {
-                      setState(() {
-                        player.scores[game.currentRound] = int.parse(input);
-                        SqlHelper.updatePlayer(player);
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            });
-      },
-      title: Text(player.name),
-      subtitle: Text(
-          "Esta ronda: ${player.getRoundScore(game.currentRound)} \tTotal: ${player.getTotalScore()}"),
-    );
-  }
-
-  void setCurrentRound(int value) {
-    game.currentRound = value;
-    SqlHelper.updateGame(game);
-    refreshGame();
-  }
-
-  Padding winnerCard() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Center(
-        child: Flex(
-          direction: Axis.vertical,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ConfettiWidget(
-                    shouldLoop: false,
-                    confettiController: controller,
-                    blastDirectionality: BlastDirectionality.explosive,
-                  ),
-                  SvgPicture.asset("assets/svgs/crown.svg",
-                      fit: BoxFit.fitWidth),
-                  Text(game.playerList![game.getWinner()].name,
-                      style: const TextStyle(fontSize: 25)),
-                ],
-              ),
-            )
-          ],
+  buildBottomBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        8,
+        (index) => Container(
+          width: index == game.currentRound ? 14.0 : 11.0,
+          height: 7.0,
+          margin: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 3.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(5),
+            // If the round is the current one, make it primary color, if it's the last one, make it green, else make it grey
+            color: getColor(index),
+          ),
         ),
       ),
     );
+  }
+
+  Color? getColor(int index) {
+    if (index == game.currentRound) {
+      return index == 7
+          ? Colors.purple.withAlpha(200)
+          : Theme.of(context).buttonTheme.colorScheme?.primary.withAlpha(200);
+    } else if (index == 7) {
+      return Colors.purple.withAlpha(90);
+    } else {
+      return Colors.grey.withAlpha(90);
+    }
   }
 }
