@@ -73,24 +73,12 @@ class GameScreenState extends State<GameScreen> {
         enlargeCenterPage: false,
         enableInfiniteScroll: false,
       ),
-      items: [
-        RoundCard(
-            game: game, rIndex: 0, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 1, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 2, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 3, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 4, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 5, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 6, confettiController: _confettiController),
-        RoundCard(
-            game: game, rIndex: 7, confettiController: _confettiController),
-      ],
+      items: List.generate(
+          8,
+          (index) => RoundCard(
+              game: game,
+              rIndex: index,
+              confettiController: index == 7 ? _confettiController : null)),
     );
   }
 

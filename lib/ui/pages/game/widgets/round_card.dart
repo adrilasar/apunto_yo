@@ -12,13 +12,13 @@ import '../../../widgets/flip_card.dart';
 class RoundCard extends StatefulWidget {
   final Game game;
   final int rIndex;
-  final ConfettiController confettiController;
+  final ConfettiController? confettiController;
 
   const RoundCard(
       {Key? key,
       required this.game,
       required this.rIndex,
-      required this.confettiController})
+      this.confettiController})
       : super(key: key);
 
   @override
@@ -48,9 +48,9 @@ class _RoundCardState extends State<RoundCard> {
               onLongPress: () async {
                 await controller2.flipCard(rand.nextBool());
               },
-              child: widget.rIndex == 7
+              child: widget.confettiController != null
                   ? WinnerContent(widget.game,
-                      confettiController: widget.confettiController)
+                      confettiController: widget.confettiController!)
                   : RoundContent(widget.rIndex, widget.game),
             ),
           ),
