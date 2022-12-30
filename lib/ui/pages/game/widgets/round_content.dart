@@ -18,30 +18,36 @@ class _RoundContentState extends State<RoundContent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(155, 0, 0, 30),
-            child: Wrap(
-              spacing: 40,
-              children: [
-                Text(
-                  'Esta ronda',
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
+          ListTile(
+            contentPadding: const EdgeInsets.all(0),
+            leading: const SizedBox(
+              width: 120,
+            ),
+            title: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Esta ronda',
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+            trailing: SizedBox(
+              width: 40,
+              child: Text(
                   'TOTAL',
                   style: Theme.of(context)
                       .textTheme
                       .caption
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                )
-              ],
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
             ),
+                
           ),
           Expanded(
             child: ListView.builder(

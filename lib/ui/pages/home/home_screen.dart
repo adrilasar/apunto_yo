@@ -7,7 +7,6 @@ import 'package:apunto_yo/ui/pages/home/widgets/steps_dialog.dart';
 import 'package:apunto_yo/ui/pages/rules/rules_screen.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../data/entities/game.dart';
 import '../delete/delete_screen.dart';
