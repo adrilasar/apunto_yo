@@ -136,6 +136,7 @@ class CreateScreenState extends State<CreateScreen> {
     return ActionChip(
       side: BorderSide.none,
       onPressed: () {
+        FocusManager.instance.primaryFocus?.unfocus();
         showDialog(
           context: context,
           builder: (context) {
