@@ -40,7 +40,7 @@ Dismissible buildPlayerChip(BuildContext context, int index,
           },
         );
       },
-      labelPadding: const EdgeInsets.fromLTRB(5, 20, 15, 20),
+      labelPadding: const EdgeInsets.fromLTRB(2, 20, 4, 20),
       avatar: Container(
         width: 45,
         height: 45,
