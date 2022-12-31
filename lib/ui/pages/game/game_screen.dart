@@ -64,7 +64,8 @@ class GameScreenState extends State<GameScreen> {
         height: MediaQuery.of(context).size.height,
         viewportFraction: 1,
         onPageChanged: (index, reason) {
-          if (index == 7) {
+          // Avoids conffeti bug not playing when opening the game
+          if (index == 7 && reason == CarouselPageChangedReason.manual) {
             _confettiController.play();
           }
           setState(() => game.currentRound = index);
