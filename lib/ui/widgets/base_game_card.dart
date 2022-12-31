@@ -10,13 +10,10 @@ Column buildBaseGameCard(BuildContext context, Game game) {
   return Column(
     children: [
       buildGameTitle(context, game),
-      Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 20,
-          children: [
-            buildPlayerCount(context, game.playerList!.length),
-            buildPlayerList(context, game.playerList!, game.getWinner()),
-          ]),
+      ListTile(
+        leading: buildPlayerCount(context, game.playerList!.length),
+        title: buildPlayerList(context, game.playerList!, game.getWinner()),
+      ),
       buildGameDate(context, game),
     ],
   );
