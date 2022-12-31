@@ -56,9 +56,9 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text: "• Comodín o jóker: 50 puntos\n"
-                    "• As: 20 puntos\n"
-                    "• Figuras (rey, reina o dama y jota): 10 puntos\n"
+                text: "• Comodín o jóker: 50p.\n"
+                    "• As: 20p.\n"
+                    "• Figuras (rey, reina o dama y jota): 10p.\n"
                     "• Cartas de 2 a 10: Su valor numérico\n\n\n",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -67,13 +67,23 @@ class RulesScreenState extends State<RulesScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextSpan(
-                text: "1ª ➜ 2 Tríos  -  7 cartas.\n"
+                text: "1ª ➜ 2 Tríos  -  7 cartas\n"
                     "2ª ➜ Trío y Escalera  -  8 cartas\n"
                     "3ª ➜ 2 Escaleras  -  9 cartas\n"
                     "4ª ➜ 3 Tríos  -  10 cartas\n"
                     "5ª ➜ 2 Tríos y Escalera  -  11 cartas\n"
                     "6ª ➜ Trío y 2 Escaleras  -  12 cartas\n"
                     "7ª ➜ 3 Escaleras  -  13 cartas\n\n\n",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              TextSpan(
+                text: "Final del juego o mano:\n\n",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              TextSpan(
+                text: "Cuando un jugador...\n"
+                    "• Se baja y cierra en el mismo turno ➜ -10p.\n"
+                    "• Se bajó en un turno anterior ➜ 0p.\n\n\n",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               // Centered text
