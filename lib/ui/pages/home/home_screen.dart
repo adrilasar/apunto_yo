@@ -159,7 +159,7 @@ class HomeScreenState extends State<HomeScreen> {
       onLongPress: () => checkSteps(context, 0, controller, this),
       onDoubleTap: () => checkSteps(context, 1, controller, this),
       child: Text(
-        "Apunto yo!",
+        "Apunto Yo!",
         style: Theme.of(context)
             .textTheme
             .titleLarge
