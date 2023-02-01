@@ -16,6 +16,12 @@
     · <a href="#contributing">Contribute</a>
   </p>
 </p>
+<hr>
+<p align="center">
+<img src="https://user-images.githubusercontent.com/27899791/216180205-7d8e06d1-7a82-4927-94ee-bdcb4a16c1a5.png" width="350">
+<img src="https://user-images.githubusercontent.com/27899791/216183200-82bc81dd-897c-4a52-b28c-4c0449774bb7.png" width="350">
+</p>
+
 
 ## Installation
 
