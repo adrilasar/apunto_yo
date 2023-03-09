@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         builder: (ColorScheme? lightColorScheme, ColorScheme? darkColorScheme) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Apunto yo!',
+        title: 'Apunto Yo!',
         theme: AppTheme.lightTheme(lightColorScheme),
         darkTheme: AppTheme.darkTheme(darkColorScheme),
         home: const HomeScreen(),
