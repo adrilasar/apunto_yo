@@ -22,47 +22,44 @@ class _RoundContentState extends State<RoundContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            leading: const SizedBox(
-              width: 120,
-            ),
-            title: Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Esta ronda',
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    ?.copyWith(fontWeight: FontWeight.bold),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(2),
+              1: FlexColumnWidth(1),
+              2: FlexColumnWidth(1),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: [
+              TableRow(
+                children: [
+                  const SizedBox(height: 48.0), // Spacer
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Esta ronda',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      )),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'TOTAL',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      )),
+                ],
               ),
-            ),
-            trailing: SizedBox(
-              width: 40,
-              child: Text(
-                  'TOTAL',
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-                
+            ],
           ),
           Expanded(
             child: ListView.builder(
               itemCount: widget.game.playerList!.length,
               itemBuilder: (context, pIndex) {
-                return Wrap(
-                  children: [
-                    buildPlayerInfo(context, widget.rIndex,
-                        widget.game.playerList![pIndex]),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                      child: Divider(),
-                    )
-                  ],
-                );
+                return buildPlayerRow(context, pIndex);
               },
             ),
           )
@@ -71,38 +68,61 @@ class _RoundContentState extends State<RoundContent> {
     );
   }
 
-  Widget buildPlayerInfo(BuildContext context, int rIndex, Player player) {
-    return ListTile(
-      leading: SizedBox(
-        width: 120,
-        child: Text(
-          player.name,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-      ),
-      title: TextFormField(
-        initialValue: player.scores[rIndex] != 0
-            ? player.scores[rIndex].toString()
-            : null,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        style: Theme.of(context).textTheme.titleLarge,
-        decoration: const InputDecoration(
-          hintText: '0',
-        ),
-        onChanged: (value) {
-          player.scores[rIndex] = int.tryParse(value) ?? 0;
-          SqlHelper.updatePlayer(player);
-        },
-      ),
-      trailing: SizedBox(
-        width: 40,
-        child: Text(
-          player.getTotalScore().toString(),
-          style: Theme.of(context).textTheme.titleMedium,
-          textAlign: TextAlign.right,
-        ),
-      ),
+  Wrap buildPlayerRow(BuildContext context, int pIndex) {
+    return Wrap(
+      children: [
+        buildPlayerInfo(
+            context, widget.rIndex, widget.game.playerList![pIndex]),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+          child: Divider(),
+        )
+      ],
     );
+  }
+
+  Widget buildPlayerInfo(BuildContext context, int rIndex, Player player) {
+    return Table(
+        columnWidths: const {
+          0: FlexColumnWidth(2),
+          1: FlexColumnWidth(1),
+          2: FlexColumnWidth(1),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8),
+              child: Text(
+                player.name,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            TextFormField(
+              initialValue: player.scores[rIndex] != 0
+                  ? player.scores[rIndex].toString()
+                  : null,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              style: Theme.of(context).textTheme.titleLarge,
+              decoration: const InputDecoration(
+                hintText: '0',
+              ),
+              onChanged: (value) {
+                player.scores[rIndex] = int.tryParse(value) ?? 0;
+                SqlHelper.updatePlayer(player);
+              },
+            ),
+            SizedBox(
+              width: 40,
+              child: Text(
+                player.getTotalScore().toString(),
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
+              ),
+            )
+          ]),
+        ]);
   }
 }
