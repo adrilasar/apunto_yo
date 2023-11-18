@@ -39,7 +39,7 @@ class _RoundContentState extends State<RoundContent> {
                         'Esta ronda',
                         style: Theme.of(context)
                             .textTheme
-                            .caption
+                            .bodySmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       )),
                   Align(
@@ -48,7 +48,7 @@ class _RoundContentState extends State<RoundContent> {
                         'TOTAL',
                         style: Theme.of(context)
                             .textTheme
-                            .caption
+                            .bodySmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       )),
                 ],
