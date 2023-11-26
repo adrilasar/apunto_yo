@@ -45,7 +45,7 @@ dependencies:
 dependency_overrides:
   material_color_utilities: ^0.2.0
 
-flutter_icons:
+flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/ios_icon.png" # Provide icon for ios
