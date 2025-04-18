@@ -20,7 +20,7 @@ class GameScreen extends StatefulWidget {
 
 class GameScreenState extends State<GameScreen> {
   late final ConfettiController _confettiController;
-  late final CarouselController _carouselController;
+  late final CarouselSliderController _carouselController;
   late Game game;
   bool _isLoading = false;
   final Random rand = Random();
@@ -30,7 +30,7 @@ class GameScreenState extends State<GameScreen> {
     super.initState();
     _confettiController =
         ConfettiController(duration: const Duration(seconds: 4));
-    _carouselController = CarouselController();
+    _carouselController = CarouselSliderController();
     refreshGame();
   }
 

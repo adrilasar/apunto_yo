@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.4+20
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  sdk: ^3.7.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dynamic_color: ^1.5.4
+  dynamic_color: ^1.7.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,12 +38,12 @@ dependencies:
   cupertino_icons: ^1.0.5
   sqflite: ^2.0.3+1
   shimmer: ^3.0.0
-  confetti: ^0.7.0
+  confetti: ^0.8.0
   flutter_svg: ^2.0.9
-  carousel_slider: ^4.1.1
+  carousel_slider: ^5.0.0
 
 dependency_overrides:
-  material_color_utilities: ^0.2.0
+  material_color_utilities: ^0.8.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -53,7 +53,7 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/launcher_icon/foreground.png"
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.3
   flutter_test:
     sdk: flutter
 
@@ -62,7 +62,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

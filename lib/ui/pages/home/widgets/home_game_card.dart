@@ -61,7 +61,7 @@ cardDismissed(
         behavior: SnackBarBehavior.floating,
         content: const Text('Partida borrada'),
         action: SnackBarAction(
-            textColor: Theme.of(context).bottomAppBarColor,
+            textColor: Theme.of(context).snackBarTheme?.actionTextColor,
             label: 'Deshacer',
             onPressed: () => state.refresh(() => {
                   games.insert(index, deletedItem),

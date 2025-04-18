@@ -49,7 +49,7 @@ class RulesScreenState extends State<RulesScreen> {
               ),
               TextSpan(
                 text: "(También se admiten las de póker españolas)\n\n\n",
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               TextSpan(
                 text: "Valor de las cartas:\n\n",

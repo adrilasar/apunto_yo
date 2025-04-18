@@ -159,7 +159,7 @@ class CreateScreenState extends State<CreateScreen> {
       ),
       label: Text('Añadir jugador',
           style: TextStyle(
-              fontSize: Theme.of(context).textTheme.button?.fontSize)),
+              fontSize: Theme.of(context).textTheme.labelLarge?.fontSize)),
       elevation: 12,
     );
   }
