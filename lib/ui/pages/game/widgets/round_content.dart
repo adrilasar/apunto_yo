@@ -8,7 +8,7 @@ class RoundContent extends StatefulWidget {
   final int rIndex;
   final Game game;
 
-  const RoundContent(this.rIndex, this.game, {Key? key}) : super(key: key);
+  const RoundContent(this.rIndex, this.game, {super.key});
 
   @override
   State<RoundContent> createState() => _RoundContentState();

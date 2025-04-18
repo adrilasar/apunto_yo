@@ -8,8 +8,7 @@ class WinnerContent extends StatefulWidget {
   final Game game;
   final ConfettiController confettiController;
 
-  const WinnerContent(this.game, {Key? key, required this.confettiController})
-      : super(key: key);
+  const WinnerContent(this.game, {super.key, required this.confettiController});
 
   @override
   State<WinnerContent> createState() => _WinnerContentState();

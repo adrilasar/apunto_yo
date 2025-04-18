@@ -12,7 +12,7 @@ import '../../../data/entities/game.dart';
 class GameScreen extends StatefulWidget {
   final int id;
 
-  const GameScreen({Key? key, required this.id}) : super(key: key);
+  const GameScreen({super.key, required this.id});
 
   @override
   GameScreenState createState() => GameScreenState();

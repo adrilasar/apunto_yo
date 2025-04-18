@@ -15,7 +15,7 @@ checkSteps(BuildContext context, int step, ConfettiController controller,
     state.refresh(() => state.s2 = true);
   }
   if (state.s1 && state.s2) {
-    state.refresh(() => {state.s1 = state.s2 = false, controller.play()});
+    state.refresh(() {state.s1 = state.s2 = false; controller.play();});
     showDialog(
       context: context,
       builder: (BuildContext context) => getStepsDialog(context, controller),

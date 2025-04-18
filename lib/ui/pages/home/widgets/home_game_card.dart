@@ -61,13 +61,13 @@ cardDismissed(
         behavior: SnackBarBehavior.floating,
         content: const Text('Partida borrada'),
         action: SnackBarAction(
-            textColor: Theme.of(context).snackBarTheme?.actionTextColor,
+            textColor: Theme.of(context).snackBarTheme.actionTextColor,
             label: 'Deshacer',
-            onPressed: () => state.refresh(() => {
-                  games.insert(index, deletedItem),
-                  deletedItem.dDate = null,
-                  SqlHelper.updateGame(deletedItem),
-                  state.refreshGames()
+            onPressed: () => state.refresh(() {
+                  games.insert(index, deletedItem);
+                  deletedItem.dDate = null;
+                  SqlHelper.updateGame(deletedItem);
+                  state.refreshGames();
                 })),
       ),
     );

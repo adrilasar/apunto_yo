@@ -17,8 +17,7 @@ class FlipCardWidget extends StatefulWidget {
       {required this.controller,
       required this.front,
       required this.back,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   FlipCardWidgetState createState() => FlipCardWidgetState();

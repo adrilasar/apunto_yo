@@ -15,11 +15,10 @@ class RoundCard extends StatefulWidget {
   final ConfettiController? confettiController;
 
   const RoundCard(
-      {Key? key,
+      {super.key,
       required this.game,
       required this.rIndex,
-      this.confettiController})
-      : super(key: key);
+      this.confettiController});
 
   @override
   State<RoundCard> createState() => _RoundCardState();
